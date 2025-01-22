@@ -1,14 +1,12 @@
+// word_counter.js
 function wordCount(text) {
-    const words = text.toLowerCase().split(" ");
-    const wordMap = {};
+    if (!text.trim()) return {}; // 공백 입력 방지
+    const words = text.toLowerCase().match(/\b\w+\b/g); // 정규표현식으로 단어 추출
+    const wordMap = new Map();
     words.forEach(word => {
-        if (word in wordMap) {
-            wordMap[word] += 1;
-        } else {
-            wordMap[word] = 1;
-        }
+        wordMap.set(word, (wordMap.get(word) || 0) + 1);
     });
-    return wordMap;
+    return Object.fromEntries(wordMap);
 }
-const text = "Hello world! Hello AI. Hello AI world!";
+const text = "Hello world! Hello, AI. Hello AI world!";
 console.log(wordCount(text));
